@@ -1120,6 +1120,7 @@ std::map<StorePath, StorePath> copyPaths(
     }
     auto pathsMap = copyPaths(srcStore, dstStore, storePaths, repair, checkSigs, substitute);
 
+    debug("in store-api.cc copyPaths() RealizedPath::Set variant");
     ThreadPool pool;
 
     try {
