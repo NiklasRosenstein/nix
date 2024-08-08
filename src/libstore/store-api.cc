@@ -1166,8 +1166,10 @@ std::map<StorePath, StorePath> copyPaths(
     SubstituteFlag substitute)
 {
     printInfo("[store-api.cc] Enter copyPaths(StorePathSet)");
+    printInfo("[store-api.cc] storePaths.size() = %d", storePaths.size());
 
     auto valid = dstStore.queryValidPaths(storePaths, substitute);
+    printInfo("[store-api.cc] valid.size() = %d", valid.size());
 
     StorePathSet missing;
     for (auto & path : storePaths)
@@ -1180,7 +1182,7 @@ std::map<StorePath, StorePath> copyPaths(
     auto sortedMissing = srcStore.topoSortPaths(missing);
     std::reverse(sortedMissing.begin(), sortedMissing.end());
 
-    printInfo("[store-api.cc] sortedMissing.size() = %s", sortedMissing.size());
+    printInfo("[store-api.cc] sortedMissing.size() = %d", sortedMissing.size());
 
     std::map<StorePath, StorePath> pathsMap;
     for (auto & path : storePaths)
