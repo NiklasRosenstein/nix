@@ -1109,6 +1109,8 @@ std::map<StorePath, StorePath> copyPaths(
     CheckSigsFlag checkSigs,
     SubstituteFlag substitute)
 {
+    printInfo("[store-api.cc] Enter copyPaths(RealizedPath::Set)");
+
     StorePathSet storePaths;
     std::set<Realisation> toplevelRealisations;
     for (auto & path : paths) {
@@ -1120,7 +1122,6 @@ std::map<StorePath, StorePath> copyPaths(
     }
     auto pathsMap = copyPaths(srcStore, dstStore, storePaths, repair, checkSigs, substitute);
 
-    debug("in store-api.cc copyPaths() RealizedPath::Set variant");
     ThreadPool pool;
 
     try {
@@ -1164,6 +1165,8 @@ std::map<StorePath, StorePath> copyPaths(
     CheckSigsFlag checkSigs,
     SubstituteFlag substitute)
 {
+    printInfo("[store-api.cc] Enter copyPaths(StorePathSet)");
+
     auto valid = dstStore.queryValidPaths(storePaths, substitute);
 
     StorePathSet missing;
@@ -1176,6 +1179,8 @@ std::map<StorePath, StorePath> copyPaths(
     // store paths to add, so sort them right now
     auto sortedMissing = srcStore.topoSortPaths(missing);
     std::reverse(sortedMissing.begin(), sortedMissing.end());
+
+    printInfo("[store-api.cc] sortedMissing.size() = %s", sortedMissing.size());
 
     std::map<StorePath, StorePath> pathsMap;
     for (auto & path : storePaths)
